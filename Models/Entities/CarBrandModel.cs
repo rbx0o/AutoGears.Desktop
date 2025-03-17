@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
@@ -18,6 +14,7 @@ namespace AutoGears.Models.Entities
         public string Name { get; set; } = string.Empty;
 
         [Column("car_brand_id")]
+        [Reference(typeof(CarBrand))]
         public Guid CarBrandId { get; set; }
     }
 }

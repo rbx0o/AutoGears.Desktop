@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
@@ -30,6 +26,7 @@ namespace AutoGears.Models.Entities
         public string PhoneNumber { get; set; } = string.Empty;
 
         [Column("gender_id")]
+        [Reference(typeof(Gender))]
         public Guid GenderId { get; set; }
 
         [Column("image")]

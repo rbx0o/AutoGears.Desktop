@@ -4,8 +4,8 @@ using Supabase.Postgrest.Models;
 
 namespace AutoGears.Models.Entities
 {
-    [Table("genders")]
-    public class Gender : BaseModel
+    [Table("car_brands")]
+    public class CarBrand : BaseModel
     {
         [PrimaryKey("id")]
         public Guid Id { get; set; }
