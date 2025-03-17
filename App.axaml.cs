@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using AutoGears.ViewModels;
 using AutoGears.Views;
+using AutoGears.Services;
 
 namespace AutoGears;
 
@@ -13,8 +14,10 @@ public partial class App : Application
         AvaloniaXamlLoader.Load(this);
     }
 
-    public override void OnFrameworkInitializationCompleted()
+    public override async void OnFrameworkInitializationCompleted()
     {
+        await SupabaseService.Instance.InitAsync();
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow
@@ -25,5 +28,4 @@ public partial class App : Application
 
         base.OnFrameworkInitializationCompleted();
     }
-
 }
