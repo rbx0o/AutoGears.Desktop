@@ -2,11 +2,12 @@
 using System.Diagnostics;
 using System.Reactive;
 using System.Threading.Tasks;
+using AutoGears.Models.Queries;
 using AutoGears.Services;
 using AutoGears.ViewModels.SessionAuthorization;
 using ReactiveUI;
+using Supabase.Gotrue;
 using static AutoGears.ViewModels.MainWindowViewModel;
-using static AutoGears.ViewModels.ViewModelBase;
 
 namespace AutoGears.ViewModels
 {
@@ -26,14 +27,11 @@ namespace AutoGears.ViewModels
         public AuthViewModel()
         {
             SignInCommand = ReactiveCommand.CreateFromTask(SignIn);
-            ToggleThemeCommand = ReactiveCommand.Create(Navigate.ToggleTheme);
         }
         #endregion
 
         #region ReactiveCommands
         public ReactiveCommand<Unit, Unit> SignInCommand { get; }
-
-        public ReactiveCommand<Unit, Unit> ToggleThemeCommand { get; }
         #endregion
 
         #region Methods
@@ -45,9 +43,28 @@ namespace AutoGears.ViewModels
 
                 if (SupabaseService.Instance.Supabase?.Auth.CurrentUser != null)
                 {
-                    var session = SupabaseService.Instance.Supabase.Auth.CurrentSession;
-                    AuthorizedUserSession.UserInstance.SaveData(session.AccessToken, session.RefreshToken);
-                    Navigate.ToMain();
+                    string role = await Get.CurrentUserRole();
+                    Session? session;
+
+                    switch (role)
+                    {
+                        case "Клиент":
+                            Message = "Доступ запрещен ⛔";
+                            break;
+                        case "Администратор":
+                            session = SupabaseService.Instance.Supabase.Auth.CurrentSession;
+                            AuthorizedUserSession.UserInstance.SaveData(session.AccessToken, session.RefreshToken);
+                            MainWindow.NavigateToAdminMain();
+                            break;
+                        case "Менеджер":
+                            session = SupabaseService.Instance.Supabase.Auth.CurrentSession;
+                            AuthorizedUserSession.UserInstance.SaveData(session.AccessToken, session.RefreshToken);
+                            MainWindow.NavigateToManagerMain();
+                            break;
+                        default:
+                            break;
+                    }
+
                     Debug.WriteLine($"SignIn Success");
                 }
             }

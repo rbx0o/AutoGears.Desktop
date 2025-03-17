@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
-namespace AutoGears.Models
+namespace AutoGears.Models.Entities
 {
     [Table("car_brand_models")]
     public class CarBrandModel : BaseModel

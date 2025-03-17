@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoGears.Services;
-using ReactiveUI;
 
 namespace AutoGears.ViewModels.SessionAuthorization
 {
@@ -29,11 +25,7 @@ namespace AutoGears.ViewModels.SessionAuthorization
                 if (data != null && !string.IsNullOrEmpty(data.AccessToken) && !string.IsNullOrEmpty(data.RefreshToken))
                 {
                     await SupabaseService.Instance.Supabase?.Auth.SetSession(data.AccessToken, data.RefreshToken); 
-                    Debug.WriteLine($"SessionIsSaved Succes: {data.AccessToken}");
-                    Debug.WriteLine($"SessionIsSaved Succes: {data.RefreshToken}");
-                    Debug.WriteLine($"SessionIsSaved Succes: {SupabaseService.Instance.Supabase?.Auth.CurrentSession.AccessToken}");
-                    Debug.WriteLine($"SessionIsSaved Succes: {SupabaseService.Instance.Supabase?.Auth.CurrentSession.RefreshToken}");
-                    Debug.WriteLine($"SessionIsSaved Succes: {SupabaseService.Instance.Supabase?.Auth.CurrentUser.Email}");
+                    Debug.WriteLine($"SessionIsSaved Succes");
                     UserLoadedState = true;
                     return;
                 }
