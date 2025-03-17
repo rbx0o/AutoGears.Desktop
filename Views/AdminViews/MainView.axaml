@@ -7,39 +7,65 @@
 			 xmlns:vm="using:AutoGears.ViewModels.AdminViewModels"
 			 x:DataType="vm:MainViewModel">
 
-	<SplitView IsPaneOpen="True" DisplayMode="Inline" OpenPaneLength="200">
+	<SplitView IsPaneOpen="True" DisplayMode="Inline" OpenPaneLength="250">
 		<SplitView.Pane >
-			<Grid RowDefinitions="100, 60, 60, 60, *, 80" ShowGridLines="False">
+			<Grid RowDefinitions="100, 60, 60, 60, *, 120" ShowGridLines="False">
 				<StackPanel Grid.Row="0" Orientation="Horizontal"
 							HorizontalAlignment="Center" VerticalAlignment="Center">
 					<Image Source="{Binding Icon}"
-						   Width="64" Height=""/>
+						   Width="64" Height="64"/>
 					<StackPanel Margin="10, 0, 0, 0" VerticalAlignment="Center" HorizontalAlignment="Center">
 						<TextBlock Text="Auto" FontSize="24" FontWeight="SemiBold"/>
 						<TextBlock Text="Gears" FontSize="24" FontWeight="SemiBold"/>
 					</StackPanel>
 				</StackPanel>
-				<Button Grid.Row="1" Background="Transparent"
-						VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-						Command="{Binding ToProductCommand}">
+				<ToggleButton Grid.Row="1" Background="Transparent"
+					VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+					Command="{Binding ToProductCommand}" IsChecked="{Binding Button1IsChecked}">
 					<TextBlock Text="📦 Товары" FontSize="18"
 							   VerticalAlignment="Center" HorizontalAlignment="Left"/>
-				</Button>
-				<Button Grid.Row="2" Background="Transparent"
-						VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-						Command="{Binding ToSuppliersCommand}">
+				</ToggleButton>
+				<ToggleButton Grid.Row="2" Background="Transparent"
+									VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+									Command="{Binding ToSuppliersCommand}" IsChecked="{Binding Button2IsChecked}">
 					<TextBlock Text="🚚 Поставщики" FontSize="18"
 							   VerticalAlignment="Center" HorizontalAlignment="Left"/>
-				</Button>
-				<Button Grid.Row="3" Background="Transparent"
-						VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-						Command="{Binding ToUsersCommand}">
+				</ToggleButton>
+				<ToggleButton Grid.Row="3" Background="Transparent"
+									VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+									Command="{Binding ToUsersCommand}" IsChecked="{Binding Button3IsChecked}">
 					<TextBlock Text="👨‍👨‍👦‍👦 Пользователи" FontSize="18"
 							   VerticalAlignment="Center" HorizontalAlignment="Left"/>
-				</Button>
+				</ToggleButton>
 				<StackPanel Grid.Row="5" VerticalAlignment="Center" Margin="15">
-					<Button Content="Поменять тему" Command="{Binding ToggleThemeCommand}"/>
-					<Button Content="Выйти" Command="{Binding ExitCommand}"/>
+					<Grid Height="42" Width="42" Margin="0, 0, 0, 30"
+							  HorizontalAlignment="Center" VerticalAlignment="Center" ShowGridLines="False">
+						<Image Source="{Binding ThemeIcon}" Height="42" Width="42"
+							HorizontalAlignment="Center" VerticalAlignment="Center">
+							<Image.Clip>
+								<RectangleGeometry Rect="0, 0, 42, 42" RadiusX="21" RadiusY="21"/>
+							</Image.Clip>
+						</Image>
+						<Button Command="{Binding ToggleThemeCommand}"
+						 Width="42" Height="42" Background="Transparent">
+							<Button.Clip>
+								<RectangleGeometry Rect="0, 0, 42, 42" RadiusX="21" RadiusY="21"/>
+							</Button.Clip>
+						</Button>
+					</Grid>
+					<Grid ColumnDefinitions="*, 32" ShowGridLines="False">
+						<StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Left">
+							<TextBlock Text="{Binding FullName}" FontSize="16" FontWeight="Medium" Margin="0, 0, 0, 10"/>
+							<TextBlock Text="{Binding Role}"/>
+						</StackPanel>
+						<Grid Height="42" Width="42" Grid.Column="1"
+							  HorizontalAlignment="Center" VerticalAlignment="Center" ShowGridLines="False">
+							<Image Source="{Binding SignOutIcon}" Height="42" Width="42"
+								HorizontalAlignment="Center" VerticalAlignment="Center"/>
+							<Button Command="{Binding ExitCommand}"
+							 Width="42" Height="42" Background="Transparent"/>
+						</Grid>
+					</Grid>
 				</StackPanel>
 			</Grid>
 		</SplitView.Pane>

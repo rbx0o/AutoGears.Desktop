@@ -35,7 +35,7 @@ namespace AutoGears.Models.Queries
             }
         }
 
-        static async Task<Person?> CurrentUserPerson()
+        public static async Task<Person?> CurrentUserPerson()
         {
             try
             {
