@@ -1,3 +1,4 @@
+using AutoGears.ViewModels.ManagerViewModels;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
@@ -9,5 +10,6 @@ public partial class PurchasesView : UserControl
     public PurchasesView()
     {
         InitializeComponent();
+        DataContext = new PurchasesViewModel();
     }
 }

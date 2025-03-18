@@ -7,7 +7,36 @@
 			 xmlns:vm="using:AutoGears.ViewModels.AdminViewModels"
 			 x:DataType="vm:UsersViewModel">
 
-	<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24">
-		Пользователи AdminView
-	</TextBlock>
+	<Grid RowDefinitions="50, *, 100">
+		<TextBlock Text="Пользователи" FontSize="24" Grid.Row="0"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+		<ListBox ItemsSource="{Binding Persons}" Grid.Row="1">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Border Padding="10" Margin="5" BorderThickness="1" CornerRadius="10">
+						<StackPanel Orientation="Vertical" Spacing="5">
+							<StackPanel Orientation="Vertical" Spacing="5">
+								<TextBlock Text="Фамилия:" FontSize="14" FontWeight="SemiBold"/>
+								<TextBox Text="{Binding LastName}"/>
+
+								<TextBlock Text="Имя:" FontSize="14" FontWeight="SemiBold"/>
+								<TextBox Text="{Binding FirstName}"/>
+
+								<TextBlock Text="Отчество:" FontSize="14" FontWeight="SemiBold"/>
+								<TextBox Text="{Binding Patronymic}"/>
+
+								<TextBlock Text="Телефон:" FontSize="14" FontWeight="SemiBold"/>
+								<TextBox Text="{Binding PhoneNumber}"/>
+							</StackPanel>
+						</StackPanel>
+					</Border>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<Button Content="💾 Сохранить" Command="{Binding SaveChangesCommand}"
+                Background="LightGreen" FontSize="18" Grid.Row="2"
+                VerticalAlignment="Center" HorizontalAlignment="Center"/>
+	</Grid>
 </UserControl>

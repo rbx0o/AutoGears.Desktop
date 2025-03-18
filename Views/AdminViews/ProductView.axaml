@@ -7,7 +7,47 @@
 			 xmlns:vm="using:AutoGears.ViewModels.AdminViewModels"
 			 x:DataType="vm:ProductViewModel">
 
-	<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24">
-		Товары AdminView
-	</TextBlock>
+	<Grid RowDefinitions="50, *, 100">
+		<TextBlock Text="Товары" FontSize="24" Grid.Row="0"
+				   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		<ListBox ItemsSource="{Binding SpareParts}" Grid.Row="1">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Border>
+						<StackPanel Orientation="Vertical" Spacing="5">
+							<!-- Название -->
+							<TextBlock Text="{Binding Name}"
+									   FontSize="16"
+									   FontWeight="Bold"/>
+
+							<!-- Артикул -->
+							<TextBlock Text="{Binding ArticleNumber, StringFormat = 'Артикул: {0}'}"
+									   FontSize="14"
+									   Foreground="DarkGray"/>
+
+							<Separator Background="Gray" Height="1" Margin="0,5"/>
+
+							<!-- Цены -->
+							<StackPanel Orientation="Horizontal" Spacing="10">
+								<TextBlock Text="Цена закупки:" FontSize="14" Foreground="Green"/>
+								<TextBox Text="{Binding PurchasePrice}" FontSize="14" Foreground="Green"/>
+								<TextBlock Text="Цена продажи:" FontSize="14" Foreground="Red"/>
+								<TextBox Text="{Binding SalePrice}" FontSize="14" Foreground="Red"/>
+							</StackPanel>
+
+							<!-- Остаток с ButtonSpinner -->
+							<StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+								<TextBlock Text="Остаток:" FontSize="14" FontWeight="SemiBold" Foreground="Blue"/>
+								<NumericUpDown Value="{Binding Remains}" Increment="1"
+											   FormatString="0" Minimum="0" Maximum="500"/>
+							</StackPanel>
+						</StackPanel>
+					</Border>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<Button Content="💾 Сохранить" Command="{Binding SaveChangesCommand}"
+				Background="LightGreen" FontSize="18" Grid.Row="2"
+				VerticalAlignment="Center" HorizontalAlignment="Center"/>
+	</Grid>
 </UserControl>

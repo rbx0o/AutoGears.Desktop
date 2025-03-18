@@ -7,7 +7,32 @@
 			 xmlns:vm="using:AutoGears.ViewModels.ManagerViewModels"
 			 x:DataType="vm:PurchasesViewModel">
 
-	<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24">
-		Закупки ManagerView
-	</TextBlock>
+	<Grid RowDefinitions="50, *, 100">
+		<TextBlock Text="Поставки" FontSize="24" Grid.Row="0"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+		<ListBox ItemsSource="{Binding Purchases}" Grid.Row="1">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Border Padding="10" Margin="5" BorderThickness="1" CornerRadius="10">
+						<StackPanel Orientation="Vertical" Spacing="5">
+							<TextBlock Text="Накладная № {Binding PurchaseNumber}" FontSize="16" FontWeight="Bold"/>
+
+							<TextBlock Text="Дата поставки:" FontSize="14" FontWeight="SemiBold"/>
+							<DatePicker SelectedDate="{Binding PurchaseDate}"/>
+
+							<Button Content="📄 Сформировать накладную"
+                        Command="{Binding DataContext.GenerateInvoiceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        CommandParameter="{Binding}"
+                        Background="LightBlue" Padding="5"/>
+						</StackPanel>
+					</Border>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<Button Content="💾 Сохранить" Command="{Binding SaveChangesCommand}"
+                Background="LightGreen" FontSize="18" Grid.Row="2"
+                VerticalAlignment="Center" HorizontalAlignment="Center"/>
+	</Grid>
 </UserControl>

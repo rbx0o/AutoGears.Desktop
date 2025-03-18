@@ -7,7 +7,40 @@
 			 xmlns:vm="using:AutoGears.ViewModels.AdminViewModels"
 			 x:DataType="vm:SuppliersViewModel">
 
-	<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24">
-		Поставщики AdminView
-	</TextBlock>
+	<Grid RowDefinitions="50, *, 100">
+		<TextBlock Text="Поставщики" FontSize="24" Grid.Row="0"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+		<ListBox ItemsSource="{Binding Suppliers}" Grid.Row="1">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Border Padding="10" Margin="5" BorderThickness="1" CornerRadius="10">
+						<StackPanel Orientation="Vertical" Spacing="5">
+							<TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold"/>
+
+							<TextBlock Text="{Binding Inn, StringFormat='ИНН: {0}'}"
+                                       FontSize="14" Foreground="DarkGray"/>
+
+							<Separator Background="Gray" Height="1" Margin="0,5"/>
+
+							<StackPanel Orientation="Vertical" Spacing="5">
+								<TextBlock Text="Email:" FontSize="14" FontWeight="SemiBold"/>
+								<TextBox Text="{Binding Email}"/>
+
+								<TextBlock Text="Телефон:" FontSize="14" FontWeight="SemiBold"/>
+								<TextBox Text="{Binding PhoneNumber}"/>
+
+								<TextBlock Text="Адрес:" FontSize="14" FontWeight="SemiBold"/>
+								<TextBox Text="{Binding Address}"/>
+							</StackPanel>
+						</StackPanel>
+					</Border>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<Button Content="💾 Сохранить" Command="{Binding SaveChangesCommand}"
+                Background="LightGreen" FontSize="18" Grid.Row="2"
+                VerticalAlignment="Center" HorizontalAlignment="Center"/>
+	</Grid>
 </UserControl>

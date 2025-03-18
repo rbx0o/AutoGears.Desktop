@@ -1,9 +1,5 @@
-using System;
-using System.Reactive.Linq;
-using AutoGears.ViewModels;
+using AutoGears.ViewModels.ManagerViewModels;
 using Avalonia.Controls;
-using Avalonia.Threading;
-using ReactiveUI;
 
 namespace AutoGears.Views;
 

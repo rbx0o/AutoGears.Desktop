@@ -10,4 +10,8 @@ public partial class ProductView : UserControl
     {
         InitializeComponent();
     }
+
+    private void NumericUpDown_LostFocus(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+    }
 }
