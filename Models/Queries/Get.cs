@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoGears.Models.Entities;
 using AutoGears.Services;
@@ -122,6 +121,13 @@ namespace AutoGears.Models.Queries
                     .Get();
 
                 Debug.WriteLine("AllPurchases Succes");
+
+                foreach (var item in result.Models)
+                {
+                    item.SelectedDate = new DateTimeOffset(item.PurchaseDate);
+                    item.SelectedTime = item.PurchaseDate.TimeOfDay;
+                }
+
                 return result.Models;
             }
             catch (Exception ex)
@@ -147,6 +153,64 @@ namespace AutoGears.Models.Queries
             var parts = temp2.Models;
 
             return result.Select(x => new PurchaseContentDto
+            {
+                SparePart = parts.FirstOrDefault(p => p.Id == x.SparePartId),
+                QuantityParts = x.QuantityParts
+            }).ToList();
+        }
+
+        public static async Task<List<Order>> AllOrders()
+        {
+            try
+            {
+                var result = await SupabaseService.Instance.Supabase
+                    .From<Order>()
+                    .Get();
+
+                Debug.WriteLine("AllOrders Success");
+                return result.Models;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"AllOrders Error: {ex.Message}");
+                throw;
+            }
+        }
+
+        public static async Task<List<OrderStatus>> AllOrderStatuses()
+        {
+            try
+            {
+                var result = await SupabaseService.Instance.Supabase
+                    .From<OrderStatus>()
+                    .Get();
+
+                Debug.WriteLine("AllOrderStatuses Success");
+                return result.Models;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"AllOrderStatuses Error: {ex.Message}");
+                throw;
+            }
+        }
+
+        public static async Task<List<OrderContentDto>> OrderContent(Guid orderId)
+        {
+            var temp1 = await SupabaseService.Instance.Supabase
+                .From<OrderContent>()
+                .Where(x => x.OrderId == orderId)
+                .Get();
+
+            var result = temp1.Models;
+
+            var temp2 = await SupabaseService.Instance.Supabase
+                .From<SparePart>()
+                .Get();
+
+            var parts = temp2.Models;
+
+            return result.Select(x => new OrderContentDto
             {
                 SparePart = parts.FirstOrDefault(p => p.Id == x.SparePartId),
                 QuantityParts = x.QuantityParts

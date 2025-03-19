@@ -7,7 +7,41 @@
 			 xmlns:vm="using:AutoGears.ViewModels.ManagerViewModels"
 			 x:DataType="vm:OrdersViewModel">
 
-	<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24">
-		Заказы ManagerView
-	</TextBlock>
+	<Grid RowDefinitions="50, *, 100">
+		<TextBlock Text="Заказы" FontSize="24" Grid.Row="0"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+		<ListBox ItemsSource="{Binding Orders}" Grid.Row="1">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Border Padding="10" Margin="5" BorderThickness="1" CornerRadius="10">
+						<StackPanel Orientation="Vertical" Spacing="5">
+							<TextBlock Text="{Binding Id, StringFormat = 'Заказ № {0}'}" FontSize="16" FontWeight="Bold"/>
+							<TextBlock Text="{Binding CreatedAt, StringFormat = 'Дата создания: {0:dd.MM.yyyy HH:mm}'}"/>
+							<TextBlock Text="{Binding TotalCost, StringFormat = 'Сумма: {0:C2}'}"/>
+
+							<TextBlock Text="Статус заказа:"/>
+							<ComboBox ItemsSource="{Binding $parent[UserControl;0].((vm:OrdersViewModel)DataContext).OrderStatuses}"
+									  SelectedItem="{Binding SelectedStatus}">
+								<ComboBox.ItemTemplate>
+									<DataTemplate>
+										<TextBlock Text="{Binding Name}"/>
+									</DataTemplate>
+								</ComboBox.ItemTemplate>
+							</ComboBox>
+
+							<Button Content="🧾 Сформировать чек"
+									Command="{Binding $parent[UserControl;0].((vm:OrdersViewModel)DataContext).GenerateReceiptCommand}"
+									CommandParameter="{Binding}"
+									Background="LightBlue" Padding="5"/>
+						</StackPanel>
+					</Border>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<Button Content="💾 Сохранить" Command="{Binding SaveChangesCommand}"
+                Background="LightGreen" FontSize="18" Grid.Row="2"
+                VerticalAlignment="Center" HorizontalAlignment="Center"/>
+	</Grid>
 </UserControl>

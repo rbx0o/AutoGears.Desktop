@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoGears.Models.Entities;
 using AutoGears.Services;
@@ -87,6 +85,8 @@ namespace AutoGears.Models.Queries
             {
                 foreach (var purchase in purchases)
                 {
+                    purchase.PurchaseDate = purchase.SelectedDate.Date + purchase.SelectedTime;
+
                     await SupabaseService.Instance.Supabase
                         .From<Purchase>()
                         .Where(x => x.Id == purchase.Id)
@@ -94,6 +94,27 @@ namespace AutoGears.Models.Queries
                         .Update();
                 }
                 Debug.WriteLine("Update Purchases Success");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
+        public static async Task Orders(List<Order> orders)
+        {
+            try
+            {
+                foreach (var order in orders)
+                {
+                    await SupabaseService.Instance.Supabase
+                        .From<Order>()
+                        .Where(x => x.Id == order.Id)
+                        .Set(x => x.OrderStatusId, order.SelectedStatus.Id)
+                        .Update();
+                }
+                Debug.WriteLine("Update Orders Success");
             }
             catch (Exception ex)
             {

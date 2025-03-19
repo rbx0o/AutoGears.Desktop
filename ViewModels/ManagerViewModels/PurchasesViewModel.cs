@@ -17,14 +17,11 @@ namespace AutoGears.ViewModels.ManagerViewModels
         #region Fields
         private ObservableCollection<Purchase> _purchases;
         private HashSet<Purchase> ModifiedPurchases = new();
+        
         #endregion
 
         #region Properties
-        public ObservableCollection<Purchase> Purchases
-        {
-            get => _purchases;
-            set => this.RaiseAndSetIfChanged(ref _purchases, value);
-        }
+        public ObservableCollection<Purchase> Purchases { get => _purchases; set => this.RaiseAndSetIfChanged(ref _purchases, value); }        
         #endregion
 
         #region Constructors
@@ -32,7 +29,7 @@ namespace AutoGears.ViewModels.ManagerViewModels
         {
             _ = InitializeAsync();
             SaveChangesCommand = ReactiveCommand.CreateFromTask(SaveChanges);
-            GenerateInvoiceCommand = ReactiveCommand.CreateFromTask<Purchase>(GenerateInvoice);
+            GenerateInvoiceCommand = ReactiveCommand.CreateFromTask<Purchase>(GenerateInvoice);           
         }
 
         private async Task InitializeAsync()

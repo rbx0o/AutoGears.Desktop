@@ -2,13 +2,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="AutoGears.App"
              xmlns:local="using:AutoGears"
-             RequestedThemeVariant="Default">
+             RequestedThemeVariant="Default"
+			 xmlns:conv="clr-namespace:AutoGears.Converters">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
-  
+
+	<Application.Resources>
+		<conv:DateConverter x:Key="DateConv"/>
+	</Application.Resources>
+	
     <Application.Styles>
 		<FluentTheme>
 			<FluentTheme.Palettes>

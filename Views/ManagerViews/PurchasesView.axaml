@@ -16,15 +16,18 @@
 				<DataTemplate>
 					<Border Padding="10" Margin="5" BorderThickness="1" CornerRadius="10">
 						<StackPanel Orientation="Vertical" Spacing="5">
-							<TextBlock Text="Накладная № {Binding PurchaseNumber}" FontSize="16" FontWeight="Bold"/>
+							<TextBlock Text="{Binding PurchaseNumber, StringFormat = 'Накладная № {0}'}" FontSize="16" FontWeight="Bold"/>
 
-							<TextBlock Text="Дата поставки:" FontSize="14" FontWeight="SemiBold"/>
-							<DatePicker SelectedDate="{Binding PurchaseDate}"/>
+							<TextBlock Text="Дата поставки:"/>
+							<DatePicker SelectedDate="{Binding SelectedDate}" />
+        
+							<TextBlock Text="Время поставки:"/>
+							<TimePicker SelectedTime="{Binding SelectedTime}" />
 
 							<Button Content="📄 Сформировать накладную"
-                        Command="{Binding DataContext.GenerateInvoiceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                        CommandParameter="{Binding}"
-                        Background="LightBlue" Padding="5"/>
+									Command="{Binding $parent[UserControl;0].((vm:PurchasesViewModel)DataContext).GenerateInvoiceCommand}"
+									CommandParameter="{Binding}"
+									Background="LightBlue" Padding="5"/>
 						</StackPanel>
 					</Border>
 				</DataTemplate>
